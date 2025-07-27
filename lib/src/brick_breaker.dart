@@ -116,6 +116,14 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents,
     }
     return KeyEventResult.handled;       
   }
-  @override 
-  Color backgroundColor() => const Color(0xfff2e8cf);
+  
+    void reset() {}
+  void resetGame() {
+  // Reset everything necessary to restart the game
+  reset(); // optional: your FlameGame's built-in reset if you're using it
+  startGame(); // custom method you defined to begin the game
+  overlays.remove(PlayState.gameOver.name);
+  overlays.remove(PlayState.won.name);
+}
+
 }

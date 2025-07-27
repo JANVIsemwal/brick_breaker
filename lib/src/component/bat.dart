@@ -28,6 +28,7 @@ class Bat extends PositionComponent
       _paint,
     );
   }
+  
 
   @override
   void onDragUpdate(DragUpdateEvent event) {

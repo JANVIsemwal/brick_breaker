@@ -35,6 +35,28 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameReference<Bri
     super.update(dt);
     position += velocity * dt;
   }
+  void shake() {
+  final shakeEffect = MoveEffect.by(
+    Vector2(5, 0),
+    EffectController(
+      duration: 0.05,
+      reverseDuration: 0.05,
+      repeatCount: 3,
+      alternate: true,
+    ),
+  );
+  add(shakeEffect);
+}
+void fadeOutAndRemove() {
+  addAll([
+    OpacityEffect.to(0, EffectController(duration: 0.3)),
+    ScaleEffect.to(Vector2.zero(), EffectController(duration: 0.3), onComplete: () {
+      game.playState = PlayState.gameOver;
+    }),
+  ]);
+}
+
+
    @override                                                     
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
@@ -62,6 +84,8 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameReference<Bri
       velocity.x =
           velocity.x +
           (position.x - other.position.x) / other.size.x * game.width * 0.3;
+         
+
      }else if (other is Brick) {                                
       if (position.y < other.position.y - other.size.y / 2) {
         velocity.y = -velocity.y;
